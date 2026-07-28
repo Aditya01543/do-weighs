@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: forbes-demo
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python backend/app.py
+    envVars:
+      - key: PYTHONPATH
+        value: .
+      - key: JWT_SECRET_KEY
+        value: change-this-for-demo
