@@ -26,12 +26,13 @@ def get_database_uri():
     if database_url:
         return database_url
 
-    db_host = os.getenv('DB_HOST', '').strip()
-    if db_host:
-        db_user = os.getenv('DB_USER', 'root')
-        db_password = os.getenv('DB_PASSWORD', '')
+    db_host = os.getenv('DB_HOST', '').strip().lower()
+    db_user = os.getenv('DB_USER', '').strip()
+    db_password = os.getenv('DB_PASSWORD', '').strip()
+    db_name = os.getenv('DB_NAME', '').strip()
+
+    if db_host and db_host not in {'localhost', '127.0.0.1', '::1'} and db_user and db_name:
         db_port = os.getenv('DB_PORT', '3306')
-        db_name = os.getenv('DB_NAME', 'forbes_app')
         encoded_password = quote(db_password, safe='')
         return f'mysql+pymysql://{db_user}:{encoded_password}@{db_host}:{db_port}/{db_name}'
 
